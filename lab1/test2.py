@@ -37,3 +37,34 @@ for link in years.keys():
         
         #temp.__str__()
         dataList.append(temp)
+
+for link in dataList:
+    #print link.id
+    #print link.scorecardLink
+    urlLink = urllib2.urlopen(link.scorecardLink);
+    
+    scorecard = ' '
+    #urlLink = urllib2.urlopen('http://www.espncricinfo.com/ci/engine/match/754751.html');
+    urlSoup = BeautifulSoup(urlLink.read())
+    #abc=urlSoup.find('table',{'class':'batting-table innings'})
+    for t in urlSoup.find_all('table'):
+        scorecard += str(t)
+        
+    link.scorecard = scorecard
+    #print abc
+    #print link.scorecard
+    #print 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    
+
+newList = []    
+for eachItem in dataList:
+    newDict = {}
+    for key,value in eachItem.__dict__.iteritems():
+        newDict[key] = value
+    newList.append(newDict)
+
+print newList
+    
+with open("records.json", 'wb') as outfile:
+    json.dump(newList, outfile)
+    
