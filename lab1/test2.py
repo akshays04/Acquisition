@@ -43,8 +43,8 @@ for link in years.keys():
 for link in dataList:
     #print link.id
     #print link.scorecardLink
-    '''urlLink = urllib2.urlopen(link.scorecardLink);'''
-    urlLink = urllib2.urlopen('http://www.espncricinfo.com/ci/engine/match/514035.html');
+    urlLink = urllib2.urlopen(link.scorecardLink);
+    #urlLink = urllib2.urlopen('http://www.espncricinfo.com/ci/engine/match/514035.html');
     
     scorecard = ' '
     #urlLink = urllib2.urlopen('http://www.espncricinfo.com/ci/engine/match/754751.html');
@@ -66,10 +66,10 @@ for link in dataList:
             count=count+2;
             break
             
-        objBatting.name= t.find_next('td').find_next('td').a.string
-        objBatting.runs=t.find_next('td').find_next('td').find_next('td').find_next('td').string
-        objBatting.balls=t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string
-        objBatting.sr=t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string
+        objBatting.name= str(t.find_next('td').find_next('td').a.string)
+        objBatting.runs=str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
+        objBatting.balls=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+        objBatting.sr=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
         print objBatting.name +" "+objBatting.runs+" "+objBatting.balls+" "+objBatting.sr
         count=count+2;
         
