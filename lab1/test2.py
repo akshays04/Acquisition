@@ -1,9 +1,11 @@
 import urllib2
 from bs4 import BeautifulSoup
 from dataBean import DataBean
+from Batting import Batting
 import json
 
 dataList = []
+battinginfo=[]
 startPage=urllib2.urlopen("http://stats.espncricinfo.com/ci/content/records/307851.html")
 years = {}
 allLinks = {}
@@ -41,18 +43,71 @@ for link in years.keys():
 for link in dataList:
     #print link.id
     #print link.scorecardLink
-    urlLink = urllib2.urlopen(link.scorecardLink);
+    '''urlLink = urllib2.urlopen(link.scorecardLink);'''
+    urlLink = urllib2.urlopen('http://www.espncricinfo.com/ci/engine/match/514035.html');
     
     scorecard = ' '
     #urlLink = urllib2.urlopen('http://www.espncricinfo.com/ci/engine/match/754751.html');
     urlSoup = BeautifulSoup(urlLink.read())
-    #abc=urlSoup.find('table',{'class':'batting-table innings'})
-    for t in urlSoup.find_all('table'):
-        scorecard += str(t)
+    #battingScoreCard = urlSoup.findAll('table',{'class':'batting-table innings'})
+    #team1Batting=battingScoreCard[0];
+    #team2Batting=battingScoreCard[1];
+    #print team1Batting
+    #bowlingScoreCard= urlSoup.findAll('table',{'class':'batting-table innings'})
+    #team1Bowling=bowlingScoreCard[0];
+    #team1Bowling=bowlingScoreCard[1];
+    count=1;
+    while count<len(urlSoup.findAll('table',{'class':'batting-table innings'})[0].findAll('tr')):
+        print len(urlSoup.findAll('table',{'class':'batting-table innings'})[0].findAll('tr'))
+        print count
+        objBatting=Batting() 
+        t= urlSoup.findAll('table',{'class':'batting-table innings'})[0].findAll('tr')[count]
+        if not t.find_next('td').find_next('td').a:
+            count=count+2;
+            break
+            
+        objBatting.name= t.find_next('td').find_next('td').a.string
+        objBatting.runs=t.find_next('td').find_next('td').find_next('td').find_next('td').string
+        objBatting.balls=t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string
+        objBatting.sr=t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string
+        print objBatting.name +" "+objBatting.runs+" "+objBatting.balls+" "+objBatting.sr
+        count=count+2;
         
-    link.scorecard = scorecard
-    #print abc
-    #print link.scorecard
+    '''count=1;
+    while count<=urlSoup.findAll('table',{'class':'batting-table innings'})[1].findAll('tr').count:
+        objBatting=Batting() 
+        t= urlSoup.findAll('table',{'class':'batting-table innings'})[0].findAll('tr')[count]
+        objBatting.name= t.find_next('td').find_next('td').a.string
+        objBatting.runs=t.find_next('td').find_next('td').find_next('td').find_next('td').string
+        objBatting.balls=t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string
+        objBatting.sr=t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string
+        print objBatting.name +" "+objBatting.runs+" "+objBatting.balls+" "+objBatting.sr
+        count=count+2;'''
+        
+    
+    
+    
+    
+    '''print urlSoup.findAll('table',{'class':'batting-table innings'})[1].findAll('tr')[1]
+    print urlSoup.findAll('table',{'class':'batting-table innings'})[1].findAll('tr')[3]
+    for t in urlSoup.findAll('table',{'class':'batting-table innings'})[1].findAll('tr'):
+        objBatting=Batting()  
+        print t.find_next('td').find_next('td').a.string
+        print t.find_next('td').find_next('td').find_next('td').text
+        #print t.find_next('td').find_next('td').a.string'''
+        
+    
+    
+        
+    
+    #for t in urlSoup.find_all('table'):
+        #scorecard += str(t)
+        
+    #link.scorecard = scorecard
+    #print battingScoreCard
+    #print "Scoreard "+link.scorecard
+    #battingTable=scorecard.find('table',{'class':'batting-table innings'});
+    #print battingTable
     #print 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
     
 
