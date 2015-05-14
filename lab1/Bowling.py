@@ -1,4 +1,4 @@
-class Batting():
+class Bowling():
     
     def __init__(self):
         self.team = ""
