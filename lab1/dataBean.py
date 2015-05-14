@@ -10,6 +10,8 @@ class DataBean():
         self.date = ""
         self.id = ""
         self.scorecard = ""
+        self.toss = ""
+        self.batFirst = ""
         
     def __str__(self):
         print self.team1 + " vs " + self.team2 + " was won by " + self.winner + " by " + self.margin + " at " + self.location + " on " + self.date + " for more information go to " + self.scorecard 
