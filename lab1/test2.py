@@ -60,9 +60,9 @@ for link in years.keys():
         bowl2 = []
         #urlLink = urllib2.urlopen('http://www.espncricinfo.com/ci/engine/match/754751.html');
         urlSoup = BeautifulSoup(urlLink.read())
-        print temp.scorecardLink
+        #print temp.scorecardLink
         #Batting Team 1
-        print 'Batting 1'
+        #print 'Batting 1'
         count=1;
         while count<len(urlSoup.findAll('table',{'class':'batting-table innings'})[0].findAll('tr')):
             tempBat = {}
@@ -84,12 +84,12 @@ for link in years.keys():
             tempBat["balls"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
             objBatting.sr=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
             tempBat["sr"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            print objBatting.name +" "+objBatting.runs+" "+objBatting.balls+" "+objBatting.sr
+            #print objBatting.name +" "+objBatting.runs+" "+objBatting.balls+" "+objBatting.sr
             count=count+2;
             bat1.append(tempBat)
             
         #Batting Team2
-        print 'Team2 Batting'   
+        #print 'Team2 Batting'   
         count=1;
         if firstBatTeam == temp2["team1"]:
             secondBatTeam = temp2["team2"]
@@ -111,12 +111,12 @@ for link in years.keys():
             tempBat["balls"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
             objBatting.sr=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
             tempBat["sr"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            print objBatting.name +" "+objBatting.runs+" "+objBatting.balls+" "+objBatting.sr
+            #print objBatting.name +" "+objBatting.runs+" "+objBatting.balls+" "+objBatting.sr
             count=count+2;
             bat2.append(tempBat)
             
         #Bowling Team 1 
-        print'Bowling team1'  
+        #print'Bowling team1'  
         
         count=1;
         while count<len(urlSoup.findAll('table',{'class':'bowling-table'})[0].findAll('tr')):
@@ -139,12 +139,12 @@ for link in years.keys():
             tempBowl["wickets"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
             objBowling.economy=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
             tempBowl["economy"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            print objBowling.name +" "+objBowling.overs+" "+objBowling.runs+" "+objBowling.wickets+" "+objBowling.economy
+            #print objBowling.name +" "+objBowling.overs+" "+objBowling.runs+" "+objBowling.wickets+" "+objBowling.economy
             count=count+2;
             bowl1.append(tempBowl)
             
         #Bowling Team 2 
-        print'Bowling team2'  
+        #print'Bowling team2'  
         
         count=1;
         while count<len(urlSoup.findAll('table',{'class':'bowling-table'})[1].findAll('tr')):
@@ -167,7 +167,7 @@ for link in years.keys():
             tempBowl["wickets"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
             objBowling.economy=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
             tempBowl["economy"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            print objBowling.name +" "+objBowling.overs+" "+objBowling.runs+" "+objBowling.wickets+" "+objBowling.economy
+            #print objBowling.name +" "+objBowling.overs+" "+objBowling.runs+" "+objBowling.wickets+" "+objBowling.economy
             count=count+2;
             bowl2.append(tempBowl)
             
