@@ -67,10 +67,15 @@ for link in years.keys():
         while count<len(urlSoup.findAll('table',{'class':'batting-table innings'})[0].findAll('tr')):
             tempBat = {}
             objBatting=Batting() 
+            headerline= str(urlSoup.findAll('table',{'class':'batting-table innings'})[0].findAll('tr')[0].find('th',{'class':'th-innings-heading'}).text)
+            #print headerline.split(' ')[0]
+            tempBat["team"] = headerline.split(' ')[0]
+            firstBatTeam = headerline.split(' ')[0]
             t= urlSoup.findAll('table',{'class':'batting-table innings'})[0].findAll('tr')[count]
             if not t.find_next('td').find_next('td').a:
                 count=count+2;
                 break
+        
             objBatting.name= str(t.find_next('td').find_next('td').a.string)
             tempBat["batsman"] = str(t.find_next('td').find_next('td').a.string)
             objBatting.runs=str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
@@ -86,6 +91,10 @@ for link in years.keys():
         #Batting Team2
         print 'Team2 Batting'   
         count=1;
+        if firstBatTeam == temp2["team1"]:
+            secondBatTeam = temp2["team2"]
+        else:
+            secondBatTeam = temp2["team1"]
         while count<len(urlSoup.findAll('table',{'class':'batting-table innings'})[1].findAll('tr')):
             tempBat = {}
             objBatting=Batting() 
@@ -94,6 +103,7 @@ for link in years.keys():
                 count=count+2;
                 break
             objBatting.name= str(t.find_next('td').find_next('td').a.string)
+            tempBat["team"] = secondBatTeam
             tempBat["batsman"] = str(t.find_next('td').find_next('td').a.string)
             objBatting.runs=str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
             tempBat["runs"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
@@ -113,6 +123,7 @@ for link in years.keys():
             tempBowl = {}
             objBowling=Bowling() 
             t= urlSoup.findAll('table',{'class':'bowling-table'})[0].findAll('tr')[count]
+            tempBowl["team"] = secondBatTeam
             if not t.find_next('td').find_next('td').a:
                 count=count+2;
                 break
@@ -140,6 +151,7 @@ for link in years.keys():
             tempBowl = {}
             objBowling=Bowling() 
             t= urlSoup.findAll('table',{'class':'bowling-table'})[1].findAll('tr')[count]
+            tempBowl["team"] = firstBatTeam
             if not t.find_next('td').find_next('td').a:
                 count=count+2;
                 break
