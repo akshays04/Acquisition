@@ -64,132 +64,135 @@ for link in years.keys():
         #Batting Team 1
         #print 'Batting 1'
         count=1;
-        while count<len(urlSoup.findAll('table',{'class':'batting-table innings'})[0].findAll('tr')):
-            tempBat = {}
-            objBatting=Batting() 
-            headerline= str(urlSoup.findAll('table',{'class':'batting-table innings'})[0].findAll('tr')[0].find('th',{'class':'th-innings-heading'}).text)
-            #print headerline.split(' ')[0]
-            tempBat["team"] = headerline.split(' ')[0]
-            firstBatTeam = headerline.split(' ')[0]
-            t= urlSoup.findAll('table',{'class':'batting-table innings'})[0].findAll('tr')[count]
-            if not t.find_next('td').find_next('td').a:
-                count=count+2;
-                break
-        
-            objBatting.name= str(t.find_next('td').find_next('td').a.string)
-            tempBat["batsman"] = str(t.find_next('td').find_next('td').a.string)
-            objBatting.runs=str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
-            tempBat["runs"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
-            objBatting.balls=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            tempBat["balls"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            objBatting.sr=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            tempBat["sr"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            #print objBatting.name +" "+objBatting.runs+" "+objBatting.balls+" "+objBatting.sr
-            count=count+2;
-            bat1.append(tempBat)
+        print temp.scorecardLink
+        if temp2["winner"] != "no result":
+            while count<len(urlSoup.findAll('table',{'class':'batting-table innings'})[0].findAll('tr')):
+                tempBat = {}
+                objBatting=Batting() 
+                headerline= str(urlSoup.findAll('table',{'class':'batting-table innings'})[0].findAll('tr')[0].find('th',{'class':'th-innings-heading'}).text)
+                #print headerline.split(' ')[0]
+                tempBat["team"] = headerline.split(' ')[0]
+                firstBatTeam = headerline.split(' ')[0]
+                t= urlSoup.findAll('table',{'class':'batting-table innings'})[0].findAll('tr')[count]
+                if not t.find_next('td').find_next('td').a:
+                    count=count+2;
+                    break
             
-        #Batting Team2
-        #print 'Team2 Batting'   
-        count=1;
-        if firstBatTeam == temp2["team1"]:
-            secondBatTeam = temp2["team2"]
-        else:
-            secondBatTeam = temp2["team1"]
-        while count<len(urlSoup.findAll('table',{'class':'batting-table innings'})[1].findAll('tr')):
-            tempBat = {}
-            objBatting=Batting() 
-            t= urlSoup.findAll('table',{'class':'batting-table innings'})[1].findAll('tr')[count]
-            if not t.find_next('td').find_next('td').a:
+                objBatting.name= str(t.find_next('td').find_next('td').a.string)
+                tempBat["batsman"] = str(t.find_next('td').find_next('td').a.string)
+                objBatting.runs=str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
+                tempBat["runs"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
+                objBatting.balls=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                tempBat["balls"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                objBatting.sr=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                tempBat["sr"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                #print objBatting.name +" "+objBatting.runs+" "+objBatting.balls+" "+objBatting.sr
                 count=count+2;
-                break
-            objBatting.name= str(t.find_next('td').find_next('td').a.string)
-            tempBat["team"] = secondBatTeam
-            tempBat["batsman"] = str(t.find_next('td').find_next('td').a.string)
-            objBatting.runs=str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
-            tempBat["runs"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
-            objBatting.balls=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            tempBat["balls"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            objBatting.sr=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            tempBat["sr"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            #print objBatting.name +" "+objBatting.runs+" "+objBatting.balls+" "+objBatting.sr
-            count=count+2;
-            bat2.append(tempBat)
-            
-        #Bowling Team 1 
-        #print'Bowling team1'  
-        
-        count=1;
-        while count<len(urlSoup.findAll('table',{'class':'bowling-table'})[0].findAll('tr')):
-            tempBowl = {}
-            objBowling=Bowling() 
-            t= urlSoup.findAll('table',{'class':'bowling-table'})[0].findAll('tr')[count]
-            tempBowl["team"] = secondBatTeam
-            if not t.find_next('td').find_next('td').a:
+                bat1.append(tempBat)
+                
+            #Batting Team2
+            #print 'Team2 Batting'   
+            count=1;
+            if firstBatTeam == temp2["team1"]:
+                secondBatTeam = temp2["team2"]
+            else:
+                secondBatTeam = temp2["team1"]
+            while count<len(urlSoup.findAll('table',{'class':'batting-table innings'})[1].findAll('tr')):
+                tempBat = {}
+                objBatting=Batting() 
+                t= urlSoup.findAll('table',{'class':'batting-table innings'})[1].findAll('tr')[count]
+                if not t.find_next('td').find_next('td').a:
+                    count=count+2;
+                    break
+                objBatting.name= str(t.find_next('td').find_next('td').a.string)
+                tempBat["team"] = secondBatTeam
+                tempBat["batsman"] = str(t.find_next('td').find_next('td').a.string)
+                objBatting.runs=str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
+                tempBat["runs"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
+                objBatting.balls=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                tempBat["balls"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                objBatting.sr=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                tempBat["sr"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                #print objBatting.name +" "+objBatting.runs+" "+objBatting.balls+" "+objBatting.sr
                 count=count+2;
-                break
-            objBowling.name= str(t.find_next('td').find_next('td').a.string)
-            tempBowl["bowler"] = str(t.find_next('td').find_next('td').a.string)
-            objBowling.overs=str(t.find_next('td').find_next('td').find_next('td').string)
-            tempBowl["overs"] = str(t.find_next('td').find_next('td').find_next('td').string)
-            objBowling.maidens=str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
-            tempBowl["maidens"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
-            objBowling.runs=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            tempBowl["runsGiven"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            objBowling.wickets=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            tempBowl["wickets"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            objBowling.economy=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            tempBowl["economy"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            #print objBowling.name +" "+objBowling.overs+" "+objBowling.runs+" "+objBowling.wickets+" "+objBowling.economy
-            count=count+2;
-            bowl1.append(tempBowl)
+                bat2.append(tempBat)
+                
+            #Bowling Team 1 
+            #print'Bowling team1'  
             
-        #Bowling Team 2 
-        #print'Bowling team2'  
-        
-        count=1;
-        while count<len(urlSoup.findAll('table',{'class':'bowling-table'})[1].findAll('tr')):
-            tempBowl = {}
-            objBowling=Bowling() 
-            t= urlSoup.findAll('table',{'class':'bowling-table'})[1].findAll('tr')[count]
-            tempBowl["team"] = firstBatTeam
-            if not t.find_next('td').find_next('td').a:
+            count=1;
+            while count<len(urlSoup.findAll('table',{'class':'bowling-table'})[0].findAll('tr')):
+                tempBowl = {}
+                objBowling=Bowling() 
+                t= urlSoup.findAll('table',{'class':'bowling-table'})[0].findAll('tr')[count]
+                tempBowl["team"] = secondBatTeam
+                if not t.find_next('td').find_next('td').a:
+                    count=count+2;
+                    break
+                objBowling.name= str(t.find_next('td').find_next('td').a.string)
+                tempBowl["bowler"] = str(t.find_next('td').find_next('td').a.string)
+                objBowling.overs=str(t.find_next('td').find_next('td').find_next('td').string)
+                tempBowl["overs"] = str(t.find_next('td').find_next('td').find_next('td').string)
+                objBowling.maidens=str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
+                tempBowl["maidens"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
+                objBowling.runs=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                tempBowl["runsGiven"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                objBowling.wickets=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                tempBowl["wickets"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                objBowling.economy=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                tempBowl["economy"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                #print objBowling.name +" "+objBowling.overs+" "+objBowling.runs+" "+objBowling.wickets+" "+objBowling.economy
                 count=count+2;
-                break
-            objBowling.name= str(t.find_next('td').find_next('td').a.string)
-            tempBowl["bowler"] = str(t.find_next('td').find_next('td').a.string)
-            objBowling.overs=str(t.find_next('td').find_next('td').find_next('td').string)
-            tempBowl["overs"] = str(t.find_next('td').find_next('td').find_next('td').string)
-            objBowling.maidens=str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
-            tempBowl["maidens"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
-            objBowling.runs=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            tempBowl["runsGiven"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            objBowling.wickets=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            tempBowl["wickets"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            objBowling.economy=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            tempBowl["economy"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-            #print objBowling.name +" "+objBowling.overs+" "+objBowling.runs+" "+objBowling.wickets+" "+objBowling.economy
-            count=count+2;
-            bowl2.append(tempBowl)
+                bowl1.append(tempBowl)
+                
+            #Bowling Team 2 
+            #print'Bowling team2'  
             
-        temp2["bat1"] = bat1
-        temp2["bowl1"] = bowl1
-        temp2["bat2"] = bat2
-        temp2["bowl2"] = bowl2
-        
-        print temp2
-        mainArr.append(temp2)
-        break;
-        
-        
-        
-        '''
-        new code end
-        '''
-        
-        #temp.__str__()
-        dataList.append(temp)
+            count=1;
+            while count<len(urlSoup.findAll('table',{'class':'bowling-table'})[1].findAll('tr')):
+                tempBowl = {}
+                objBowling=Bowling() 
+                t= urlSoup.findAll('table',{'class':'bowling-table'})[1].findAll('tr')[count]
+                tempBowl["team"] = firstBatTeam
+                if not t.find_next('td').find_next('td').a:
+                    count=count+2;
+                    break
+                objBowling.name= str(t.find_next('td').find_next('td').a.string)
+                tempBowl["bowler"] = str(t.find_next('td').find_next('td').a.string)
+                objBowling.overs=str(t.find_next('td').find_next('td').find_next('td').string)
+                tempBowl["overs"] = str(t.find_next('td').find_next('td').find_next('td').string)
+                objBowling.maidens=str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
+                tempBowl["maidens"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
+                objBowling.runs=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                tempBowl["runsGiven"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                objBowling.wickets=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                tempBowl["wickets"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                objBowling.economy=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                tempBowl["economy"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                #print objBowling.name +" "+objBowling.overs+" "+objBowling.runs+" "+objBowling.wickets+" "+objBowling.economy
+                count=count+2;
+                bowl2.append(tempBowl)
+                
+            temp2["bat1"] = bat1
+            temp2["bowl1"] = bowl1
+            temp2["bat2"] = bat2
+            temp2["bowl2"] = bowl2
+            
+            #print temp2
+            mainArr.append(temp2)
+            #break;
+            
+            
+            
+            '''
+            new code end
+            '''
+            
+            #temp.__str__()
+            dataList.append(temp)
 
 
+print mainArr
 '''
 for link in dataList:
     #print link.id
