@@ -4,6 +4,7 @@ from dataBean import DataBean
 from Batting import Batting
 from Bowling import Bowling
 import json
+import pymongo
 
 mainArr = []
 
@@ -13,13 +14,15 @@ startPage=urllib2.urlopen("http://stats.espncricinfo.com/ci/content/records/3078
 years = {}
 allLinks = {}
 soup = BeautifulSoup(startPage.read())
+client = pymongo.MongoClient("localhost", 27017)
+db = client.CricStats
 
 for link in soup.find_all('a'):
     allLinks[link.get_text()] = "http://stats.espncricinfo.com/" + link.get('href')
 
 for link in allLinks.keys() :
     if(link.isdigit()):
-        if(int(link)>=2015 and int(link)<=2015): 
+        if(int(link)>=2005 and int(link)<=2015): 
             years[link] = allLinks[link]
             '''print link,
             print "    ",
@@ -178,8 +181,9 @@ for link in years.keys():
             temp2["bat2"] = bat2
             temp2["bowl2"] = bowl2
             
-            #print temp2
+            print temp2
             mainArr.append(temp2)
+            db.odi.insert_one(temp2).inserted_id
             #break;
             
             
@@ -192,7 +196,9 @@ for link in years.keys():
             dataList.append(temp)
 
 
-print mainArr
+'''for singleMatch in mainArr:
+    print singleMatch
+    db.odi.insert_one(singleMatch).inserted_id'''
 '''
 for link in dataList:
     #print link.id
