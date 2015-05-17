@@ -22,7 +22,7 @@ for link in soup.find_all('a'):
 
 for link in allLinks.keys() :
     if(link.isdigit()):
-        if(int(link)>=2005 and int(link)<=2015): 
+        if(int(link)>=2015 and int(link)<=2015): 
             years[link] = allLinks[link]
             '''print link,
             print "    ",
@@ -183,7 +183,7 @@ for link in years.keys():
             
             print temp2
             mainArr.append(temp2)
-            db.odi.insert_one(temp2).inserted_id
+            db.odi1.insert_one(temp2).inserted_id
             #break;
             
             
