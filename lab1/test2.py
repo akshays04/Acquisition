@@ -22,7 +22,7 @@ for link in soup.find_all('a'):
 
 for link in allLinks.keys() :
     if(link.isdigit()):
-        if(int(link)>=2015 and int(link)<=2015): 
+        if(int(link)>=2010 and int(link)<=2015): 
             years[link] = allLinks[link]
             
             
@@ -62,7 +62,7 @@ for link in years.keys():
         urlSoup = BeautifulSoup(urlLink.read())
         
         count=1;
-        print temp.scorecardLink
+        #print temp.scorecardLink
         if temp2["winner"] != "no result":
             while count<len(urlSoup.findAll('table',{'class':'batting-table innings'})[0].findAll('tr')):
                 tempBat = {}
@@ -105,10 +105,10 @@ for link in years.keys():
                 tempBat["batsman"] = str(t.find_next('td').find_next('td').a.string)
                 objBatting.runs=str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
                 tempBat["runs"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').string)
-                objBatting.balls=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-                tempBat["balls"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-                objBatting.sr=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
-                tempBat["sr"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                objBatting.balls=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                tempBat["balls"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                objBatting.sr=str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
+                tempBat["sr"] = str(t.find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').find_next('td').string)
                 count=count+2;
                 bat2.append(tempBat)
             
@@ -168,9 +168,9 @@ for link in years.keys():
             temp2["bat2"] = bat2
             temp2["bowl2"] = bowl2
             
-            print temp2
+            #print temp2
             mainArr.append(temp2)
-            db.odi1.insert_one(temp2).inserted_id
+            db.odi.insert_one(temp2).inserted_id
             
             
             
