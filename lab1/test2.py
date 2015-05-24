@@ -64,6 +64,10 @@ for link in years.keys():
         count=1;
         #print temp.scorecardLink
         if temp2["winner"] != "no result":
+            print temp.scorecardLink
+            total= str(urlSoup.findAll('table',{'class':'batting-table innings'})[0].find('tr',{'class':'total-wrap'}).find_all('td')[3].text)
+            print 'Team 1 total '+total
+            temp2["team1 Total"] = total
             while count<len(urlSoup.findAll('table',{'class':'batting-table innings'})[0].findAll('tr')):
                 tempBat = {}
                 objBatting=Batting() 
@@ -93,6 +97,10 @@ for link in years.keys():
                 secondBatTeam = temp2["team2"]
             else:
                 secondBatTeam = temp2["team1"]
+            print temp.scorecardLink
+            total= str(urlSoup.findAll('table',{'class':'batting-table innings'})[1].find('tr',{'class':'total-wrap'}).find_all('td')[3].text)
+            print 'Team 2 total '+total
+            temp2["team2 Total"] = total
             while count<len(urlSoup.findAll('table',{'class':'batting-table innings'})[1].findAll('tr')):
                 tempBat = {}
                 objBatting=Batting() 
