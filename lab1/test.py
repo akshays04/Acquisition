@@ -20,8 +20,8 @@ for each in db.odi.find({"$or":[{"team1":"India","team2":"Australia"},{"team1":"
             for pl in each.get('bat1'):
                 print pl
                 bat["team"] = team1["team"]
-                bat["name"] = pl.batsman
-                print bat.team,bat.name 
+                bat["name"] = pl.get('batsman')
+                #print bat.team,bat.name 
 #             team2["team"] = "Australia"
 #             print "******AUS Bat Second******"
 #             for pl in each.get('bat2'):
@@ -70,5 +70,6 @@ for p in players:
 
 for p in players:
     print p.get('name'),p.get('tRuns'),p.get('avg')
+    #db.batsman.insert_one(p).inserted_id
     
     
