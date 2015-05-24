@@ -11,9 +11,56 @@ for each in db.odi.find({"$or":[{"team1":"India"},{"team2":"India"}]}):
     if year == 2015:
         latestRecords.append(each)
     count = count+1
-print count
-print len(latestRecords)
+#print count
+#print len(latestRecords)
+team1 = {}
+team2 = {}
+bat = {}
+latestBatsmanRecords = []
 
+for each in latestRecords:
+    if(each.get('bat1')[0].get('team') == "India"):
+            team1["team"] = "India"
+            #print "******India Bat First******"
+            for pl in each.get('bat1'):
+                #print pl
+                bat = {}
+                bat["team"] = team1["team"]
+                bat["name"] = str(pl.get('batsman'))
+                bat["runs"] = pl.get('runs')
+                #bat["count"] = 0
+                latestBatsmanRecords.append(bat)
+                #print bat.team,bat.name 
+#             team2["team"] = "Australia"
+#             print "******AUS Bat Second******"
+#             for pl in each.get('bat2'):
+#                 print pl   
+    else:
+        team1["team"] = "India"
+        #print "******India Bat Second******"
+        for pl in each.get('bat2'):
+            #print pl
+            bat={}
+            bat["team"] = team1["team"]
+            bat["name"] = str(pl.get('batsman'))
+            bat["runs"] = pl.get('runs')
+            #bat["count"] = 0
+            latestBatsmanRecords.append(bat)
+
+
+
+topPlayer = {}
+for each in latestBatsmanRecords:
+    if(int(each["runs"])>80):
+        if topPlayer.has_key(each.get("name")):
+            temp = topPlayer[each.get("name")]
+            topPlayer[each.get("name")] = temp + 1
+        else:
+            topPlayer[each.get("name")] = 1
+
+print topPlayer
+
+'''Start of win % calculation'''
 team1 = {}
 team2 = {}
 bat = {}
@@ -85,9 +132,9 @@ for each in latestPlayersWin :
             topPlayerWin[each.get("name")] = temp + 1
         else:
             topPlayerWin[each.get("name")] = 1
-        print each
+        #print each
         
-print "************************"
+#print "************************"
 
 topPlayerLose = {} 
 for each in latestPlayersLose : 
@@ -97,6 +144,18 @@ for each in latestPlayersLose :
             topPlayerLose[each.get("name")] = temp + 1
         else:
             topPlayerLose[each.get("name")] = 1
-        print each
-print topPlayerWin
-print topPlayerLose
+        #print each
+        
+
+winPercent = {}
+for each in topPlayerWin.keys():
+    if(topPlayerLose.has_key(each)):
+        sum = topPlayerLose[each]+topPlayerWin[each]
+        floatCalc = float(topPlayerWin[each])/float(sum)
+        winPercent[each] = floatCalc*100
+    else:
+        winPercent[each] = 100
+        
+#print topPlayerWin
+#print topPlayerLose
+print winPercent
