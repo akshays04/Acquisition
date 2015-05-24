@@ -10,7 +10,7 @@ db = client.CricStats
 team1 = {}
 team2 = {}
 bat = {}
-players = []
+players = {}
 count = 0
 for each in db.odi.find({"$or":[{"team1":"India","team2":"Australia"},{"team1":"Australia","team2":"India"}]}):
     if(each.get('winner') == "India"):
@@ -19,57 +19,92 @@ for each in db.odi.find({"$or":[{"team1":"India","team2":"Australia"},{"team1":"
             print "******India Bat First******"
             for pl in each.get('bat1'):
                 print pl
-                bat["team"] = team1["team"]
-                bat["name"] = pl.get('batsman')
-                #print bat.team,bat.name 
-#             team2["team"] = "Australia"
-#             print "******AUS Bat Second******"
-#             for pl in each.get('bat2'):
-#                 print pl   
+                if(players.has_key(pl.get('batsman'))):
+                    temp = players[pl.get('batsman')]
+                    total = temp.get('tRuns')
+                    nom = temp.get('nom')
+                    nom += 1 
+                    total = total + int(pl.get('runs'))
+                    temp["tRuns"] = total
+                    temp["nom"] = nom
+                    players[pl.get('batsman')] = temp
+                   
+                else:
+                    bat={} 
+                    bat["tRuns"] = int(pl.get('runs'))
+                    bat["nom"] = 1
+                    players[pl.get('batsman')] = bat
+            team2["team"] = "Australia"
+            print "******Aus Bat Second******"
+            for pl in each.get('bat2'):
+                print pl
+                if(players.has_key(pl.get('batsman'))):
+                    temp = players[pl.get('batsman')]
+                    total = temp.get('tRuns')
+                    nom = temp.get('nom')
+                    nom += 1 
+                    total = total + int(pl.get('runs'))
+                    temp["tRuns"] = total
+                    temp["nom"] = nom
+                    players[pl.get('batsman')] = temp
+                   
+                else:
+                    bat={} 
+                    bat["tRuns"] = int(pl.get('runs'))
+                    bat["nom"] = 1
+                    players[pl.get('batsman')] = bat    
         else:
             team1["team"] = "India"
             print "******India Bat Second******"
             for pl in each.get('bat2'):
                 print pl
-                bat={}
-                bat["team"] = team1["team"]
-                bat["name"] = pl.get('batsman')
-                bat["runs"] = pl.get('runs')
-                players.append(bat)
-
-                #print bat.get('team'),bat.get('name')
-#                 if(db.odi.find({"bat1":"S Dhawan"})):
-#                     print "yes"
-#             team2["team"] = "Australia"
-#             print "******Aus Bat First******"
-#             for pl in each.get('bat1'):
-#                 print pl
-#             # print each.get('winner')
+                if(players.has_key(pl.get('batsman'))):
+                    temp = players[pl.get('batsman')]
+                    total = temp.get('tRuns')
+                    nom = temp.get('nom')
+                    nom += 1 
+                    total = total + int(pl.get('runs'))
+                    temp["tRuns"] = total
+                    temp["nom"] = nom
+                    players[pl.get('batsman')] = temp
+                   
+                else:
+                    bat={} 
+                    bat["tRuns"] = int(pl.get('runs'))
+                    bat["nom"] = 1
+                    players[pl.get('batsman')] = bat
+                    
+            team2["team"] = "Australia"
+            print "******Aus Bat First******"
+            for pl in each.get('bat1'):
+                print pl
+                if(players.has_key(pl.get('batsman'))):
+                    temp = players[pl.get('batsman')]
+                    total = temp.get('tRuns')
+                    nom = temp.get('nom')
+                    nom += 1 
+                    total = total + int(pl.get('runs'))
+                    temp["tRuns"] = total
+                    temp["nom"] = nom
+                    players[pl.get('batsman')] = temp
+                   
+                else:
+                    bat={} 
+                    bat["tRuns"] = int(pl.get('runs'))
+                    bat["nom"] = 1
+                    players[pl.get('batsman')] = bat     
     print "*******************************************"
     
-print each
-
+print each    
 for p in players:
-    total = 0;
-    count = 0;
-    for q in players:
-        if(p.get('name') == q.get('name')):
-            #print q.get('name')
-            total =int(total) + int(q.get('runs'))
-            count += 1;
-            p["nom"] = count
-     
-    #print p.get('name'),total,p.get('count')
-    p["tRuns"] = total
-    
-for p in players:
+    temp = players[p]
     avg = 0.0;
-    avg = p.get('tRuns') / p.get('nom') 
+    avg = temp.get('tRuns') / temp.get('nom') 
     #print avg
-    p["avg"] = avg
+    temp["avg"] = avg
+    players[p] = temp
 
-for p in players:
-    print p.get('name'),p.get('tRuns'),p.get('avg')
-    #db.batsman.insert_one(p).inserted_id
+print players
+
     
     
