@@ -158,4 +158,4 @@ for each in topPlayerWin.keys():
         
 #print topPlayerWin
 #print topPlayerLose
-print winPercent
+print "winpercent "+str(winPercent)
