@@ -5,7 +5,7 @@ client = pymongo.MongoClient("localhost", 27017)
 db = client.CricStats
 count = 0
 latestRecords = []
-for each in db.odi.find({"$or":[{"team1":"India"},{"team2":"India"}]}):
+for each in db.odi.find({"$or":[{"teamBat1":"India"},{"teamBat2":"India"}]}):
     arr = each.get("date").split(",")
     year = int(arr[1])
     if year == 2015:
@@ -13,35 +13,35 @@ for each in db.odi.find({"$or":[{"team1":"India"},{"team2":"India"}]}):
     count = count+1
 #print count
 #print len(latestRecords)
-team1 = {}
-team2 = {}
+teamBat1 = {}
+teamBat2 = {}
 bat = {}
 latestBatsmanRecords = []
 
 for each in latestRecords:
     if(each.get('bat1')[0].get('team') == "India"):
-            team1["team"] = "India"
+            teamBat1["team"] = "India"
             #print "******India Bat First******"
             for pl in each.get('bat1'):
                 #print pl
                 bat = {}
-                bat["team"] = team1["team"]
+                bat["team"] = teamBat1["team"]
                 bat["name"] = str(pl.get('batsman'))
                 bat["runs"] = pl.get('runs')
                 #bat["count"] = 0
                 latestBatsmanRecords.append(bat)
                 #print bat.team,bat.name 
-#             team2["team"] = "Australia"
+#             teamBat2["team"] = "Australia"
 #             print "******AUS Bat Second******"
 #             for pl in each.get('bat2'):
 #                 print pl   
     else:
-        team1["team"] = "India"
+        teamBat1["team"] = "India"
         #print "******India Bat Second******"
         for pl in each.get('bat2'):
             #print pl
             bat={}
-            bat["team"] = team1["team"]
+            bat["team"] = teamBat1["team"]
             bat["name"] = str(pl.get('batsman'))
             bat["runs"] = pl.get('runs')
             #bat["count"] = 0
@@ -61,65 +61,65 @@ for each in latestBatsmanRecords:
 print topPlayer
 
 '''Start of win % calculation'''
-team1 = {}
-team2 = {}
+teamBat1 = {}
+teamBat2 = {}
 bat = {}
 latestPlayersWin = []
 
-for each in db.odi.find({"$or":[{"team1":"India","team2":"Australia"},{"team1":"Australia","team2":"India"}]}):
+for each in db.odi.find({"$or":[{"teamBat1":"India","teamBat2":"Australia"},{"teamBat1":"Australia","teamBat2":"India"}]}):
      if(each.get('winner') == "India"):
         if(each.get('bat1')[0].get('team') == "India"):
-            team1["team"] = "India"
+            teamBat1["team"] = "India"
             #print "******India Bat First******"
             for pl in each.get('bat1'):
                 #print pl
-                bat["team"] = team1["team"]
+                bat["team"] = teamBat1["team"]
                 bat["name"] = str(pl.get('batsman'))
                 bat["runs"] = pl.get('runs')
                 #bat["count"] = 0
                 latestPlayersWin.append(bat)
                 #print bat.team,bat.name 
-#             team2["team"] = "Australia"
+#             teamBat2["team"] = "Australia"
 #             print "******AUS Bat Second******"
 #             for pl in each.get('bat2'):
 #                 print pl   
         else:
-            team1["team"] = "India"
+            teamBat1["team"] = "India"
             #print "******India Bat Second******"
             for pl in each.get('bat2'):
                 #print pl
                 bat={}
-                bat["team"] = team1["team"]
+                bat["team"] = teamBat1["team"]
                 bat["name"] = str(pl.get('batsman'))
                 bat["runs"] = pl.get('runs')
                 #bat["count"] = 0
                 latestPlayersWin.append(bat)
 latestPlayersLose = []      
-for each in db.odi.find({"$or":[{"team1":"India","team2":"Australia"},{"team1":"Australia","team2":"India"}]}):
+for each in db.odi.find({"$or":[{"teamBat1":"India","teamBat2":"Australia"},{"teamBat1":"Australia","teamBat2":"India"}]}):
      if(each.get('winner') != "India"):
         if(each.get('bat1')[0].get('team') == "India"):
-            team1["team"] = "India"
+            teamBat1["team"] = "India"
             #print "******India Bat First******"
             for pl in each.get('bat1'):
                 #print pl
                 bat = {}
-                bat["team"] = team1["team"]
+                bat["team"] = teamBat1["team"]
                 bat["name"] = str(pl.get('batsman'))
                 bat["runs"] = pl.get('runs')
                 #bat["count"] = 0
                 latestPlayersLose.append(bat)
                 #print bat.team,bat.name 
-#             team2["team"] = "Australia"
+#             teamBat2["team"] = "Australia"
 #             print "******AUS Bat Second******"
 #             for pl in each.get('bat2'):
 #                 print pl   
         else:
-            team1["team"] = "India"
+            teamBat1["team"] = "India"
             #print "******India Bat Second******"
             for pl in each.get('bat2'):
                 #print pl
                 bat={}
-                bat["team"] = team1["team"]
+                bat["team"] = teamBat1["team"]
                 bat["name"] = str(pl.get('batsman'))
                 bat["runs"] = pl.get('runs')
                 #bat["count"] = 0
