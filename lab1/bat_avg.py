@@ -1,5 +1,6 @@
 from __future__ import division
 import pymongo
+from lab1.test3 import latestRecords
 
 
 client = pymongo.MongoClient("localhost", 27017)
@@ -15,6 +16,7 @@ players2 = {}
 
 ourTeam = "India"
 versus = "Sri Lanka"
+currentYear = 2014
 
 count = 0
 for each in db.odi.find({"$or":[{"team1":ourTeam,"team2":versus},{"team1":versus,"team2":ourTeam}]}):
@@ -120,8 +122,9 @@ for p in players2:
 team1["players"] = players1
 team2["players"] = players2
 
-print team1
-print team2
+'''Avg print'''
+#print team1
+#print team2
 
 ourTeamBatsman = []
 if(team1["team"]==ourTeam):
@@ -154,6 +157,13 @@ teamBat1 = {}
 teamBat2 = {}
 bat = {}
 latestPlayersWin = []
+latestRecords = []
+
+for each in db.odi.find({"$or":[{"team1":ourTeam},{"team2":ourTeam}]}):
+    arr = each.get("date").split(",")
+    year = int(arr[1])
+    if year == currentYear:
+        latestRecords.append(each)
 
 for each in db.odi.find({"$or":[{"team1":ourTeam,"team2":versus},{"team1":versus,"team2":ourTeam}]}):
      if(each.get('winner') == ourTeam):
@@ -272,6 +282,38 @@ for i in range(0,3):
     topPlayer["win75"] = win75
     topPlayer["win100"] = win100
     topPlayer["win120"] = win120
+    scores=[]
+    for each in latestRecords:
+        if(each.get('bat1')[0].get('team') == ourTeam):
+            for player in each.get('bat1'):
+                if str(player.get('batsman'))==topPlayer["name"]:
+                    temp = {}
+                    temp["opponent"] = str(each.get("bat2")[0].get("team"))
+                    temp["runs"] = int(player.get("runs"))
+                    temp["balls"] = int(player.get("balls"))
+                    temp["date"] = str(each.get("date"))
+                    temp["winner"] = str(each.get("winner"))
+                    if(temp["winner"]==ourTeam):
+                        temp["win"] = True
+                    else:
+                        temp["win"] = False
+                    #print temp
+                    scores.append(temp)                
+        else:
+            for player in each.get('bat1'):
+                if str(player.get('batsman'))==topPlayer["name"]:
+                    temp = {}
+                    temp["opponent"] = str(each.get("bat1")[0].get("team"))
+                    temp["runs"] = int(player.get("runs"))
+                    temp["balls"] = int(player.get("balls"))
+                    temp["date"] = str(each.get("date"))
+                    temp["winner"] = str(each.get("winner"))
+                    if(temp["winner"]==ourTeam):
+                        temp["win"] = True
+                    else:
+                        temp["win"] = False
+                    scores.append(temp)
+    topPlayer["latestRecords"] = scores
     topPlayerArr.append(topPlayer)
 
 for i in range(0,len(topPlayerArr)):
