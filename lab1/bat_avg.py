@@ -1,6 +1,6 @@
 from __future__ import division
 import pymongo
-
+import json
 
 client = pymongo.MongoClient("localhost", 27017)
 
@@ -271,7 +271,7 @@ for i in range(0,3):
     win100 = win100 * 100
     win120 = win120 * 100
     combinedWin = win75+win100+win120
-    topPlayer["combinedWin"] = (combinedWin/300.0)*100.0
+    topPlayer["combinedWin"] = round((combinedWin/300.0)*100.0, 2)
     topPlayer["count75win"] = count75win
     topPlayer["count100win"] = count100win
     topPlayer["count120win"] = count120win
@@ -290,6 +290,7 @@ for i in range(0,3):
                     temp["opponent"] = str(each.get("bat2")[0].get("team"))
                     temp["runs"] = int(player.get("runs"))
                     temp["balls"] = int(player.get("balls"))
+                    #d = datetime.datetime.strptime(str(each.get("date")), '%d-%b-%y')
                     temp["date"] = str(each.get("date"))
                     temp["winner"] = str(each.get("winner"))
                     if(temp["winner"]==ourTeam):
@@ -305,6 +306,7 @@ for i in range(0,3):
                     temp["opponent"] = str(each.get("bat1")[0].get("team"))
                     temp["runs"] = int(player.get("runs"))
                     temp["balls"] = int(player.get("balls"))
+                    #d = datetime.datetime.strptime(str(each.get("date")), '%d-%b-%y')
                     temp["date"] = str(each.get("date"))
                     temp["winner"] = str(each.get("winner"))
                     if(temp["winner"]==ourTeam):
@@ -323,6 +325,9 @@ for i in range(0,len(topPlayerArr)):
             topPlayerArr[j+1] = temp
     
 print topPlayerArr
+
+with open('batting.json', 'w') as outfile:
+    json.dump(topPlayerArr, outfile)
     
             
     
