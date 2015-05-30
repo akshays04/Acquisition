@@ -1,6 +1,5 @@
 from __future__ import division
 import pymongo
-from lab1.test3 import latestRecords
 
 
 client = pymongo.MongoClient("localhost", 27017)
@@ -279,9 +278,9 @@ for i in range(0,3):
     topPlayer["count75lose"] = count75lose
     topPlayer["count100lose"] = count100lose
     topPlayer["count120lose"] = count120lose
-    topPlayer["win75"] = win75
-    topPlayer["win100"] = win100
-    topPlayer["win120"] = win120
+    topPlayer["win75"] = round(win75,2)
+    topPlayer["win100"] = round(win100,2)
+    topPlayer["win120"] = round(win120,2)
     scores=[]
     for each in latestRecords:
         if(each.get('bat1')[0].get('team') == ourTeam):
@@ -294,9 +293,9 @@ for i in range(0,3):
                     temp["date"] = str(each.get("date"))
                     temp["winner"] = str(each.get("winner"))
                     if(temp["winner"]==ourTeam):
-                        temp["win"] = True
+                        temp["win"] = str(True)
                     else:
-                        temp["win"] = False
+                        temp["win"] = str(False)
                     #print temp
                     scores.append(temp)                
         else:
@@ -309,9 +308,9 @@ for i in range(0,3):
                     temp["date"] = str(each.get("date"))
                     temp["winner"] = str(each.get("winner"))
                     if(temp["winner"]==ourTeam):
-                        temp["win"] = True
+                        temp["win"] = str(True)
                     else:
-                        temp["win"] = False
+                        temp["win"] = str(False)
                     scores.append(temp)
     topPlayer["latestRecords"] = scores
     topPlayerArr.append(topPlayer)
