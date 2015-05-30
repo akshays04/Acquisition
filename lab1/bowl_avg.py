@@ -333,7 +333,16 @@ for i in range(0,5):
         finalArr.append(bowl)
     
 
+for i in range(0,len(finalArr)):
+    for j in range(0,len(finalArr)-1):
+        if finalArr[j]["combinedWin"] < finalArr[j+1]["combinedWin"]:
+            temp = finalArr[j]
+            finalArr[j] = finalArr[j+1]
+            finalArr[j+1] = temp
+print finalArr
 
+with open('bowling.json', 'w') as outfile:
+    json.dump(finalArr, outfile)
 
     
     
