@@ -302,6 +302,37 @@ for each in latestPlayersLose:
         bowlerRecords[each["name"]] = bowl
 
 print bowlerRecords
+finalArr = []
+for i in range(0,5):
+    bowl = teamArr[i]
+    if bowl["name"] in bowlerRecords:
+        if ((bowlerRecords[bowl["name"]]['winCount3wkt'] + bowlerRecords[bowl["name"]]['loseCount3wkt']) == 0):
+            win3wkt = 0.0
+        else:
+            win3wkt = bowlerRecords[bowl["name"]]['winCount3wkt']  /    (bowlerRecords[bowl["name"]]['winCount3wkt'] + bowlerRecords[bowl["name"]]['loseCount3wkt'])
+            win3wkt = win3wkt * 100
+            win3wkt = round(win3wkt,2)
+        if (bowlerRecords[bowl["name"]]['winCount3Eco'] + bowlerRecords[bowl["name"]]['loseCount3Eco']) == 0 : 
+            win3Eco = 0.0
+        else:        
+            win3Eco = bowlerRecords[bowl["name"]]['winCount3Eco']  /    (bowlerRecords[bowl["name"]]['winCount3Eco'] + bowlerRecords[bowl["name"]]['loseCount3Eco'])
+            win3Eco = win3Eco * 100
+            win3Eco = round(win3Eco,2)
+        if  (bowlerRecords[bowl["name"]]['winCount5wkt'] + bowlerRecords[bowl["name"]]['loseCount5wkt']) == 0:
+            win5wkt = 0.0
+        else:
+            win5wkt = bowlerRecords[bowl["name"]]['winCount5wkt']  /    (bowlerRecords[bowl["name"]]['winCount5wkt'] + bowlerRecords[bowl["name"]]['loseCount5wkt'])
+            win5wkt = win5wkt * 100
+            win5wkt = round(win5wkt,2)
+        combinedWin = (win3wkt + win3Eco + win5wkt)/300
+        combinedWin = round(combinedWin * 100, 2)
+        bowl["win3wkt"] = win3wkt
+        bowl["win3Eco"] = win3Eco
+        bowl["win5wkt"] = win5wkt
+        bowl["combinedWin"] = combinedWin
+        finalArr.append(bowl)
+    
+
 
 
     
