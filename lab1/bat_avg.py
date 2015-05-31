@@ -415,15 +415,15 @@ with open('batting.json', 'w') as outfile:
 batStr = ""
 batPercent = 0.0
 if newTopPlayerArr[0]["win100"]>=newTopPlayerArr[0]["win75"]:
-    batStr = "if "+newTopPlayerArr[0]["name"]+" scores more than 100 runs, "+ourTeam+" has "+str(newTopPlayerArr[0]["combinedWin"])+" % chance to win"
+    batStr = "If "+newTopPlayerArr[0]["name"]+" scores more than 100 runs, "+ourTeam+" has "+str(newTopPlayerArr[0]["combinedWin"])+" % chance to Win."
     batPercent = (newTopPlayerArr[0]["combinedWin"] / 100.0) * 20.0
     print batStr
 elif newTopPlayerArr[0]["win75"]>=newTopPlayerArr[0]["win50"]:
-    batStr = "if "+newTopPlayerArr[0]["name"]+" scores more than 75 runs, "+ourTeam+" has "+str(newTopPlayerArr[0]["combinedWin"])+" % chance to win"
+    batStr = "If "+newTopPlayerArr[0]["name"]+" scores more than 75 runs, "+ourTeam+" has "+str(newTopPlayerArr[0]["combinedWin"])+" % chance to Win."
     batPercent = (newTopPlayerArr[0]["combinedWin"] / 100.0) * 20.0
     print batStr
 elif newTopPlayerArr[0]["win50"]>0.0:
-    batStr = "if "+newTopPlayerArr[0]["name"]+" scores more than 50 runs, "+ourTeam+" has "+str(newTopPlayerArr[0]["combinedWin"])+" % chance to win"
+    batStr = "If "+newTopPlayerArr[0]["name"]+" scores more than 50 runs, "+ourTeam+" has "+str(newTopPlayerArr[0]["combinedWin"])+" % chance to Win."
     batPercent = (newTopPlayerArr[0]["combinedWin"] / 100.0) * 20.0
     print batStr
     

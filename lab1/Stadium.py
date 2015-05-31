@@ -159,9 +159,9 @@ with open('stadium.json', 'w') as outfile:
 with open('speed.json', 'w') as outfile:
     json.dump(tempDict2, outfile)
     
-b1str = "if "+ourTeam+" scores more than "+str(tempDict["avgB1Win"])+" batting first then it has "+str(tempDict["winPercentB1"])+" % chance to win"
+b1str = "If "+ourTeam+" scores more than "+str(tempDict["avgB1Win"])+" batting first then it has "+str(tempDict["winPercentB1"])+" % chance to Win."
 B1winRate = (tempDict["winPercentB1"] / 100.0) * 25.0
-b2str = "if "+ourTeam+" restricts the other team under "+str(tempDict["avgB2Win"])+" then it has "+str(tempDict["winPercentB2"])+" % chance to win"
+b2str = "If "+ourTeam+" restricts the other team under "+str(tempDict["avgB2Win"])+" then it has "+str(tempDict["winPercentB2"])+" % chance to Win."
 B2winRate = (tempDict["winPercentB2"] / 100.0) * 25.0
 
 print b1str
@@ -172,7 +172,7 @@ data["B1AvgWinRate"] = B1winRate
 data["b1str"] = b1str
 data["B2AvgWinRate"] = B2winRate
 data["b2str"] = b2str
-data["runRate"] = "if "+ourTeam+" scores at a run rate of "+str(round(float(tempDict["avgB1Win"]) / 50.0, 2))+" it has "+ str(B1winRate)+ "% chances to win"
+data["runRate"] = "If "+ourTeam+" scores at a run rate of "+str(round(float(tempDict["avgB1Win"]) / 50.0, 2))+" it has "+ str(B1winRate)+ "% chances to Win."
 data["runRatePercent"] = B1winRate
 data["team"] = ourTeam
 
