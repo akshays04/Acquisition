@@ -1,7 +1,7 @@
 from __future__ import division
 import pymongo
 import json
-
+import datetime
 client = pymongo.MongoClient("localhost", 27017)
 
 db = client.CricStats
@@ -294,8 +294,16 @@ for i in range(0,5):
                     temp["opponent"] = str(each.get("bat2")[0].get("team"))
                     temp["runs"] = int(player.get("runs"))
                     temp["balls"] = int(player.get("balls"))
+                    datesplit=str(each.get("date")).split(',',2)
+                    year=datesplit[1].strip()
+                    dmonthsplit=datesplit[0].split(' ',2)
+                    month=dmonthsplit[0]
+                    day=dmonthsplit[1]
+                    #print day+'-'+month+'-'+year
+                    #print"date: "+ datetime.datetime.strptime(str(each.get("date")), "%b %d, %Y ").strftime("%d-%b-%y")
                     #d = datetime.datetime.strptime(str(each.get("date")), '%d-%b-%y')
-                    temp["date"] = str(each.get("date"))
+                    #temp["date"] = str(each.get("date"))
+                    temp["date"] = day+'-'+month+'-'+year
                     temp["winner"] = str(each.get("winner"))
                     if(temp["winner"]==ourTeam):
                         temp["win"] = str(True)
@@ -329,7 +337,17 @@ for i in range(0,5):
                     temp["runs"] = int(player.get("runs"))
                     #temp["balls"] = int(player.get("balls"))
                     #d = datetime.datetime.strptime(str(each.get("date")), '%d-%b-%y')
-                    temp["date"] = str(each.get("date"))
+                    datesplit=str(each.get("date")).split(',',2)
+                    year=datesplit[1].strip()[2:]
+                    dmonthsplit=datesplit[0].split(' ',2)
+                    month=dmonthsplit[0]
+                    day=dmonthsplit[1]
+                    #print day+'-'+month+'-'+year
+                    #print"date: "+ datetime.datetime.strptime(str(each.get("date")), "%b %d, %Y ").strftime("%d-%b-%y")
+                    #d = datetime.datetime.strptime(str(each.get("date")), '%d-%b-%y')
+                    #temp["date"] = str(each.get("date"))
+                    temp["date"] = day+'-'+month+'-'+year
+                    
                     temp["winner"] = str(each.get("winner"))
                     if(temp["winner"]==ourTeam):
                         temp["win"] = str(True)
@@ -345,7 +363,17 @@ for i in range(0,5):
                     temp["runs"] = int(player.get("runs"))
                     temp["balls"] = int(player.get("balls"))
                     #d = datetime.datetime.strptime(str(each.get("date")), '%d-%b-%y')
-                    temp["date"] = str(each.get("date"))
+                    datesplit=str(each.get("date")).split(',',2)
+                    year=datesplit[1].strip()[2:]
+                    dmonthsplit=datesplit[0].split(' ',2)
+                    month=dmonthsplit[0]
+                    day=dmonthsplit[1]
+                    #print day+'-'+month+'-'+year
+                    #print"date: "+ datetime.datetime.strptime(str(each.get("date")), "%b %d, %Y ").strftime("%d-%b-%y")
+                    #d = datetime.datetime.strptime(str(each.get("date")), '%d-%b-%y')
+                    #temp["date"] = str(each.get("date"))
+                    temp["date"] = day+'-'+month+'-'+year
+                    
                     temp["winner"] = str(each.get("winner"))
                     if(temp["winner"]==ourTeam):
                         temp["win"] = str(True)
