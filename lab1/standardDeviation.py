@@ -1,5 +1,6 @@
 import pymongo
 import math
+import json
 
 client = pymongo.MongoClient("localhost", 27017)
 db = client.CricStats
@@ -156,6 +157,10 @@ for i in range(0,len(scoreRecordsB2)):
     
 print scoreRecordsB1
 print scoreRecordsB2
+
+stadium = {"Batting_First": batFirstPercent, "Batting_Second":batSecondPercent, "Total_Bat_First" : scoreRecordsB1[0], "Total_Bat_Second":scoreRecordsB2[0]}
+with open('stadium.json', 'w') as outfile:
+    json.dump(stadium, outfile)
        
 '''
 team1AvgScore=math.ceil(sum/count)
