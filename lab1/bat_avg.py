@@ -14,7 +14,7 @@ players1 = {}
 players2 = {}
 
 ourTeam = "India"
-versus = "Sri Lanka"
+versus = "Australia"
 currentYear = 2015
 
 count = 0
@@ -157,12 +157,16 @@ teamBat2 = {}
 bat = {}
 latestPlayersWin = []
 latestRecords = []
+allRecords = []
 
 for each in db.odi.find({"$or":[{"team1":ourTeam},{"team2":ourTeam}]}):
     arr = each.get("date").split(",")
     year = int(arr[1])
     if year == currentYear:
         latestRecords.append(each)
+        
+for each in db.odi.find({"$or":[{"team1":ourTeam},{"team2":ourTeam}]}):
+    allRecords.append(each)
 
 for each in db.odi.find({"$or":[{"team1":ourTeam,"team2":versus},{"team1":versus,"team2":ourTeam}]}):
      if(each.get('winner') == ourTeam):
@@ -300,7 +304,7 @@ for i in range(0,5):
                     #print temp
                     scores.append(temp)                
         else:
-            for player in each.get('bat1'):
+            for player in each.get('bat2'):
                 if str(player.get('batsman'))==topPlayer["name"]:
                     temp = {}
                     temp["opponent"] = str(each.get("bat1")[0].get("team"))
@@ -315,6 +319,40 @@ for i in range(0,5):
                         temp["win"] = str(False)
                     scores.append(temp)
     topPlayer["latestRecords"] = scores
+    scores=[]
+    for each in allRecords:
+        if(each.get('bat1')[0].get('team') == ourTeam):
+            for player in each.get('bat1'):
+                if str(player.get('batsman'))==topPlayer["name"]:
+                    temp = {}
+                    temp["opponent"] = str(each.get("bat2")[0].get("team"))
+                    temp["runs"] = int(player.get("runs"))
+                    #temp["balls"] = int(player.get("balls"))
+                    #d = datetime.datetime.strptime(str(each.get("date")), '%d-%b-%y')
+                    temp["date"] = str(each.get("date"))
+                    temp["winner"] = str(each.get("winner"))
+                    if(temp["winner"]==ourTeam):
+                        temp["win"] = str(True)
+                    else:
+                        temp["win"] = str(False)
+                    #print temp
+                    scores.append(temp)                
+        else:
+            for player in each.get('bat2'):
+                if str(player.get('batsman'))==topPlayer["name"]:
+                    temp = {}
+                    temp["opponent"] = str(each.get("bat1")[0].get("team"))
+                    temp["runs"] = int(player.get("runs"))
+                    temp["balls"] = int(player.get("balls"))
+                    #d = datetime.datetime.strptime(str(each.get("date")), '%d-%b-%y')
+                    temp["date"] = str(each.get("date"))
+                    temp["winner"] = str(each.get("winner"))
+                    if(temp["winner"]==ourTeam):
+                        temp["win"] = str(True)
+                    else:
+                        temp["win"] = str(False)
+                    scores.append(temp)
+    topPlayer["allRecords"] = scores
     topPlayerArr.append(topPlayer)
     
 newTopPlayerArr = []
@@ -335,6 +373,16 @@ print newTopPlayerArr
 
 with open('batting.json', 'w') as outfile:
     json.dump(newTopPlayerArr, outfile)
+    
+
+if newTopPlayerArr[0]["win100"]>newTopPlayerArr[0]["win75"]:
+    print "if "+newTopPlayerArr[0]["name"]+" scores more than 100 runs, "+ourTeam+" has "+str(newTopPlayerArr[0]["combinedWin"])+" % chance to win"
+elif newTopPlayerArr[0]["win75"]>newTopPlayerArr[0]["win50"]:
+    print "if "+newTopPlayerArr[0]["name"]+" scores more than 75 runs, "+ourTeam+" has "+str(newTopPlayerArr[0]["combinedWin"])+" % chance to win"
+elif newTopPlayerArr[0]["win50"]>0.0:
+    print "if "+newTopPlayerArr[0]["name"]+" scores more than 50 runs, "+ourTeam+" has "+str(newTopPlayerArr[0]["combinedWin"])+" % chance to win"
+    
+    
     
             
     
