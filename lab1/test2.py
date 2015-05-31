@@ -22,7 +22,7 @@ for link in soup.find_all('a'):
 
 for link in allLinks.keys() :
     if(link.isdigit()):
-        if(int(link)>=2010 and int(link)<=2015): 
+        if(int(link)>=2005 and int(link)<=2009): 
             years[link] = allLinks[link]
             
             
@@ -64,9 +64,9 @@ for link in years.keys():
         count=1;
         #print temp.scorecardLink
         if temp2["winner"] != "no result":
-            print temp.scorecardLink
+            #print temp.scorecardLink
             total= str(urlSoup.findAll('table',{'class':'batting-table innings'})[0].find('tr',{'class':'total-wrap'}).find_all('td')[3].text)
-            print 'Team 1 total '+total
+            #print 'Team 1 total '+total
             temp2["team1 Total"] = total
             while count<len(urlSoup.findAll('table',{'class':'batting-table innings'})[0].findAll('tr')):
                 tempBat = {}
@@ -97,9 +97,9 @@ for link in years.keys():
                 secondBatTeam = temp2["team2"]
             else:
                 secondBatTeam = temp2["team1"]
-            print temp.scorecardLink
+            #print temp.scorecardLink
             total= str(urlSoup.findAll('table',{'class':'batting-table innings'})[1].find('tr',{'class':'total-wrap'}).find_all('td')[3].text)
-            print 'Team 2 total '+total
+            #print 'Team 2 total '+total
             temp2["team2 Total"] = total
             while count<len(urlSoup.findAll('table',{'class':'batting-table innings'})[1].findAll('tr')):
                 tempBat = {}

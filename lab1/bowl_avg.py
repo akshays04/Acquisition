@@ -22,6 +22,7 @@ for each in db.odi.find({"$or":[{"team1":ourTeam,"team2":versus},{"team1":versus
     #if(each.get('winner') == ourTeam):
     if(each.get('bowl1')[0].get('team') == ourTeam):
         team1["team"] = ourTeam
+        #print each.get('bowl1')
         #print "******India bowl First******"
         for pl in each.get('bowl1'):
             #print pl
@@ -68,54 +69,59 @@ for each in db.odi.find({"$or":[{"team1":ourTeam,"team2":versus},{"team1":versus
                 bowl["eco"] = float(pl.get('economy'))
                 players2[str(pl.get('bowler'))] = bowl    
     else:
-        team1["team"] = ourTeam
-        #print "******India bowl Second******"
-        for pl in each.get('bowl2'):
-            #print pl
-            if(players1.has_key(pl.get('bowler'))):
-                temp = players1[pl.get('bowler')]
-                total = temp.get('wkt')
-                eco = temp.get('eco')
-                nom = temp.get('nom')
-                nom += 1 
-                eco = eco + float(pl.get('economy')) 
-                total = total + int(int(pl.get('wickets')))
-                temp["wkt"] = total
-                temp["nom"] = nom
-                temp["eco"] = eco
-                players1[str(pl.get('bowler'))] = temp
-               
-            else:
-                bowl={} 
-                bowl["wkt"] = int(int(pl.get('wickets')))
-                bowl["eco"] = float(pl.get('economy'))
-                bowl["nom"] = 1
-                players1[str(pl.get('bowler'))] = bowl
-                
-        team2["team"] = versus
-        #print "******Aus bowl First******"
-        for pl in each.get('bowl1'):
-            #print pl
-            if(players2.has_key(pl.get('bowler'))):
-                temp = players2[pl.get('bowler')]
-                total = temp.get('wkt')
-                eco = temp.get('eco')
-                nom = temp.get('nom')
-                nom += 1 
-                eco = eco + float(pl.get('economy')) 
-                total = total + int(int(pl.get('wickets')))
-                temp["wkt"] = total
-                temp["nom"] = nom
-                temp["eco"] = eco
-                players2[str(pl.get('bowler'))] = temp
-               
-            else:
-                bowl={} 
-                bowl["wkt"] = int(int(pl.get('wickets')))
-                bowl["nom"] = 1
-                bowl["eco"] = float(pl.get('economy'))
-                players2[str(pl.get('bowler'))] = bowl       
+        if(each.get('bowl2')[0].get('team') == ourTeam):
+            #print each.get('bowl2')
+            team1["team"] = ourTeam
+            #print "******India bowl Second******"
+            for pl in each.get('bowl2'):
+                #print pl
+                if(players1.has_key(pl.get('bowler'))):
+                    temp = players1[pl.get('bowler')]
+                    total = temp.get('wkt')
+                    eco = temp.get('eco')
+                    nom = temp.get('nom')
+                    nom += 1 
+                    eco = eco + float(pl.get('economy')) 
+                    total = total + int(int(pl.get('wickets')))
+                    temp["wkt"] = total
+                    temp["nom"] = nom
+                    temp["eco"] = eco
+                    players1[str(pl.get('bowler'))] = temp
+                   
+                else:
+                    bowl={} 
+                    bowl["wkt"] = int(int(pl.get('wickets')))
+                    bowl["eco"] = float(pl.get('economy'))
+                    bowl["nom"] = 1
+                    players1[str(pl.get('bowler'))] = bowl
+                    
+            team2["team"] = versus
+            #print "******Aus bowl First******"
+            for pl in each.get('bowl1'):
+                #print pl
+                if(players2.has_key(pl.get('bowler'))):
+                    temp = players2[pl.get('bowler')]
+                    total = temp.get('wkt')
+                    eco = temp.get('eco')
+                    nom = temp.get('nom')
+                    nom += 1 
+                    eco = eco + float(pl.get('economy')) 
+                    total = total + int(int(pl.get('wickets')))
+                    temp["wkt"] = total
+                    temp["nom"] = nom
+                    temp["eco"] = eco
+                    players2[str(pl.get('bowler'))] = temp
+                   
+                else:
+                    bowl={} 
+                    bowl["wkt"] = int(int(pl.get('wickets')))
+                    bowl["nom"] = 1
+                    bowl["eco"] = float(pl.get('economy'))
+                    players2[str(pl.get('bowler'))] = bowl       
     #print "*******************************************"
+    
+print players1
+print players2
     
 #print each    
 for p in players1:
@@ -303,7 +309,7 @@ for each in latestPlayersLose:
 
 print bowlerRecords
 finalArr = []
-for i in range(0,5):
+for i in range(0,10):
     bowl = teamArr[i]
     if bowl["name"] in bowlerRecords:
         if ((bowlerRecords[bowl["name"]]['winCount3wkt'] + bowlerRecords[bowl["name"]]['loseCount3wkt']) == 0):
@@ -343,6 +349,5 @@ print finalArr
 
 with open('bowling.json', 'w') as outfile:
     json.dump(finalArr, outfile)
-
     
     
