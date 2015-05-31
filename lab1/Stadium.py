@@ -154,10 +154,10 @@ print b1str
 print b2str
 
 data = {}
-data["B1winRate"] = B1winRate
-data["b1str"] = b1str
-data["B2winRate"] = B2winRate
-data["b2str"] = b2str
+data[b1str] = B1winRate
+#data["b1str"] = b1str
+data[b2str] = B2winRate
+#data["b2str"] = b2str
 
 with open('data.json', 'w') as outfile:
     json.dump(data, outfile)

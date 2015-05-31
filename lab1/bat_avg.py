@@ -425,8 +425,8 @@ elif newTopPlayerArr[0]["win50"]>0.0:
     
 with open('data.json') as data_file:    
     data = json.load(data_file)
-    data["batStr"] = batStr
-    data["batPercent"] = round(batPercent, 2)
+    #data["batStr"] = batStr
+    data[batStr] = round(batPercent, 2)
     
 with open('data.json', 'w') as outfile:
     json.dump(data, outfile)

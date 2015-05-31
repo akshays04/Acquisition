@@ -347,6 +347,9 @@ for i in range(0,len(finalArr)):
             finalArr[j+1] = temp
 print finalArr
 
+'''for each in
+    for bowler in finalArr:'''
+
 with open('bowling.json', 'w') as outfile:
     json.dump(finalArr, outfile)
 
@@ -367,8 +370,8 @@ elif finalArr[0]["win3wkt"]>0.0:
     
 with open('data.json') as data_file:    
     data = json.load(data_file)
-    data["bowlingStr"] = bowlingStr
-    data["bowlingPercent"] = round(bowlingPercent, 2)
+    #data["bowlingStr"] = bowlingStr
+    data[bowlingStr] = round(bowlingPercent, 2)
     
 with open('data.json', 'w') as outfile:
     json.dump(data, outfile)
