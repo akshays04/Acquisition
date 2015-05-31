@@ -31,6 +31,8 @@ b1Score = 0
 b1Count = 0
 b2Score = 0
 b2Count = 0
+bat1Matches = 0
+bat2Matches = 0
 
 records = []
 
@@ -67,6 +69,10 @@ for each in db.odi.find({'location': { '$in': [location ] }}):
         batSecondWins = batSecondWins + 1
     if(each.get('bat1')[0].get('team') == ourTeam or each.get('bat2')[0].get('team') == ourTeam):
         ourTeamMatches = ourTeamMatches + 1
+        if (each.get('bat1')[0].get('team') == ourTeam):
+            bat1Matches = bat1Matches + 1
+        if (each.get('bat2')[0].get('team') == ourTeam):
+            bat2Matches = bat2Matches + 1
         if (each.get('bat1')[0].get('team') == ourTeam or each.get('bat2')[0].get('team') == ourTeam) and each.get('winner') ==ourTeam : 
             ourTeamWins = ourTeamWins + 1
         if (each.get('bat1')[0].get('team') == ourTeam) and each.get('winner') ==ourTeam:
@@ -91,6 +97,8 @@ tempDict["ourTeamMatches"] = ourTeamMatches
 tempDict["ourTeamWins"] = ourTeamWins
 tempDict["ourTeamB1Wins"] = ourTeamB1Wins
 tempDict["ourTeamB2Wins"] = ourTeamB2Wins
+#tempDict["bat1WinsPercent"] = (float(ourTeamB1Wins) / float(bat1Matches)) * 100.0
+#tempDict["bat2WinsPercent"] = (float(ourTeamB2Wins) / float(bat2Matches)) * 100.0
 if b1Count != 0 :
     tempDict["avgB1Win"] = b1Score / b1Count
 else:
@@ -154,10 +162,13 @@ print b1str
 print b2str
 
 data = {}
-data[b1str] = B1winRate
-#data["b1str"] = b1str
-data[b2str] = B2winRate
-#data["b2str"] = b2str
+data["B1AvgWinRate"] = B1winRate
+data["b1str"] = b1str
+data["B2AvgWinRate"] = B2winRate
+data["b2str"] = b2str
+data["runRate"] = "if "+ourTeam+" scores at a run rate of "+str(round(float(tempDict["avgB1Win"]) / 50.0, 2))+" it has "+ str(B1winRate)+ "% chances to win"
+data["runRatePercent"] = B1winRate
+data["team"] = ourTeam
 
 with open('data.json', 'w') as outfile:
     json.dump(data, outfile)

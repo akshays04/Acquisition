@@ -423,13 +423,16 @@ elif newTopPlayerArr[0]["win50"]>0.0:
     batPercent = (newTopPlayerArr[0]["combinedWin"] / 100.0) * 20.0
     print batStr
     
+dataSet = []
 with open('data.json') as data_file:    
     data = json.load(data_file)
-    #data["batStr"] = batStr
-    data[batStr] = round(batPercent, 2)
+    data["batStr"] = batStr
+    data["batPercent"] = round(batPercent, 2)
+    dataSet.append(data)
+    dataSet.append(data)
     
 with open('data.json', 'w') as outfile:
-    json.dump(data, outfile)
+    json.dump(dataSet, outfile)
     
     
     
