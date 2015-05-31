@@ -12,9 +12,13 @@ team2 = {}
 bat = {}
 players1 = {}
 players2 = {}
-
-ourTeam = "Australia"
-versus = "India"
+with open('input.json') as data_file:    
+    input = json.load(data_file)
+    ourTeam = input["ourTeam"]
+    versus = input["versus"]
+    location = input["location"]
+#ourTeam = "Australia"
+#versus = "India"
 currentYear = 2015
 
 count = 0

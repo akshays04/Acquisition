@@ -7,8 +7,13 @@ db = client.CricStats
 count = 0
 sum=0
 
-ourTeam = "Australia"
-location = "Sydney"
+#ourTeam = "Australia"
+#location = "Sydney"
+with open('input.json') as data_file:    
+    input = json.load(data_file)
+    ourTeam = input["ourTeam"]
+    versus = input["versus"]
+    location = input["location"]
 
 numOfMatches = 0
 batFirstWins = 0
@@ -88,6 +93,7 @@ for each in db.odi.find({'location': { '$in': [location ] }}):
         
             
 tempDict = {}
+tempDict["ourTeam"] = ourTeam
 tempDict["numOfMatches"] = numOfMatches
 tempDict["highestScore"] = highestScore
 tempDict["lowestScore"] = lowestScore
