@@ -346,10 +346,46 @@ for i in range(0,len(finalArr)):
             finalArr[j] = finalArr[j+1]
             finalArr[j+1] = temp
 print finalArr
+bowler = finalArr[0]
 
-'''for each in db.odi.find({"$or":[{"team1":ourTeam,"team2":versus},{"team1":versus,"team2":ourTeam}]}):
-    for bowler in finalArr:'''
+playerLatestRecords = []
+for each in db.odi.find({"$or":[{"team1":ourTeam},{"team2":ourTeam}]}):
+        if(each.get('bowl1')[0].get('team') == ourTeam):
+            for pl in each.get('bowl1'):
+                if pl.get("bowler") == bowler["name"]:
+                    bowl = {}
+                    datesplit=str(each.get("date")).split(',',2)
+                    year=datesplit[1].strip()[2:]
+                    dmonthsplit=datesplit[0].split(' ',2)
+                    month=dmonthsplit[0]
+                    day=dmonthsplit[1]
+                    if (each["winner"] == ourTeam):
+                        bowl["win"] = "True"
+                    else:
+                        bowl["win"] = "False"
+                    bowl["date"] = day+'-'+month+'-'+year
+                    bowl["wkt"] = int(pl.get('wickets'))
+                    bowl["eco"] = float(pl.get("economy"))
+                    playerLatestRecords.append(bowl)
+        elif (each.get('bowl2')[0].get('team') == ourTeam):
+            for pl in each.get('bowl2'):
+                if pl.get("bowler") == bowler["name"]:
+                    bowl = {}
+                    datesplit=str(each.get("date")).split(',',2)
+                    year=datesplit[1].strip()[2:]
+                    dmonthsplit=datesplit[0].split(' ',2)
+                    month=dmonthsplit[0]
+                    day=dmonthsplit[1]
+                    if (each["winner"] == ourTeam):
+                        bowl["win"] = "True"
+                    else:
+                        bowl["win"] = "False"
+                    bowl["date"] = day+'-'+month+'-'+year
+                    bowl["wkt"] = int(pl.get('wickets'))
+                    bowl["eco"] = float(pl.get("economy"))
+                    playerLatestRecords.append(bowl)
 
+finalArr[0]["allRecords"] = playerLatestRecords
 with open('bowling.json', 'w') as outfile:
     json.dump(finalArr, outfile)
 
