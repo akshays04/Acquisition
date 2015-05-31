@@ -1,175 +1,161 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Individual Batting Performance Chart</title>
-</head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-<style>
-
-body {
-  font: 10px sans-serif;
-}
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-
-
-.line {
-  fill: none;
-  stroke: white;
-  stroke-width: 0.0px;
-}
-
-.dot {
-	stroke: #000;
-}
-
-.d3-tip {
-  line-height: 1;
-  font-weight: bold;
-  padding: 12px;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  border-radius: 2px;
-}
-
-
-
-.d3-tip:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 10px;
-  width: 100%;
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.8);
-  content: "\25BC";
-  position: absolute;
-  text-align: center;
-}
-
-.d3-tip.n:after {
-  margin: -1px 0 0 0;
-  top: 100%;
-  left: 0;
-}
-
-
-</style>
-<body>
-<script src="http://d3js.org/d3.v3.js"></script>
-<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-<script>
-
-var margin = {top: 20, right: 20, bottom: 30, left: 50},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
-
-var parseDate = d3.time.format("%d-%b-%y").parse;
-
-var color = d3.scale.category10();
-
-var x = d3.time.scale()
-    .range([0, width]);
-
-var y = d3.scale.linear()
-    .range([height, 0]);
-
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
-
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left");
-    
-var tip = d3.tip()
-.attr('class', 'd3-tip')
-.offset([-10, 0])
-.html(function(d) {
-		return "<strong>Runs:</strong> <span style='color:red'>" + d.runs + "</span><br><strong>Opponent:</strong> <span style='color:red'>" + d.opponent + "</span><br><strong>Date:</strong> <span style='color:red'>" + d.date + "</span>";
-})    
-
-var line = d3.svg.line()
-    .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.runs); });
-
-var svg = d3.select("body").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    
-
-svg.call(tip);
-
-d3.json("batting.json", function(error, data) {
-	data=data[0]['allRecords']
-  data.forEach(function(d) {  
-	  //d.date = Date.parse(dateString);
-    d.date = parseDate(d.date);
-    d.runs = +d.runs;
-  });
-
-  x.domain(d3.extent(data, function(d) { return d.date; }));
-  y.domain(d3.extent(data, function(d) { return d.runs; }));
-  
-  svg.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
-
-  svg.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-    .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 6)
-      .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("Runs");
-
-  svg.append("path")
-      .datum(data)
-      .attr("class", "line")
-      .attr("d", line);
-  
-  svg.selectAll("dot")
-  .data(data)
-  .enter().append("circle")
-  .attr("class", "dot")
-  .attr("r", 3.5)
-  .attr("fill",function(d){if(d.win=="True")return "green";else return "red";})
-  .attr("cx", function(d) { return x(d.date); })
-  .attr("cy", function(d) { return y(d.runs); })
-  .on('mouseover', tip.show)
-  .on('mouseout', tip.hide);
-})
-
-svg.append("text")
-        .attr("x", (width / 2))             
-        .attr("y", 0 - (margin.top / 3))
-        .attr("text-anchor", "middle")  
-        .style("font-size", "16px") 
-        .style("text-decoration", "underline")  
-        .text("Player Stats")
-;
-
-</script>
-	<br>
-	<p>Links: 
-    <a href="matchstackbar.html"><span class="label label-info">Summary</span></a> 
-	<a href="battingchart.html"><span class="label label-info">Players Batting Avgs</span></a> 
-	<a href="ScatterChart.html"><span class="label label-info">Individual Batting Stats</span></a> 
-	<a href="batAvgBar.html"><span class="label label-info">Players Batting Comparison</span></a>
-	<a href="bowlingchart.html"><span class="label label-info">Bowlers Avg Comparison</span></a>
-	<a href="BowlerStats.html"><span class="label label-info">Bowler Stats</span></a>
-	<a href="groundmeter.html"><span class="label label-info">Ground Stats</span></a>
-</p>
-</body>
+    <head>
+        <meta charset="ISO-8859-1">
+        <title>Individual Batting Performance Chart</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <style>
+            body {
+            font: 10px sans-serif;
+            }
+            .axis path,
+            .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+            }
+            .line {
+            fill: none;
+            stroke: white;
+            stroke-width: 0.0px;
+            }
+            .dot {
+            stroke: #000;
+            }
+            .d3-tip {
+            line-height: 1;
+            font-weight: bold;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            border-radius: 2px;
+            }
+            .d3-tip:after {
+            box-sizing: border-box;
+            display: inline;
+            font-size: 10px;
+            width: 100%;
+            line-height: 1;
+            color: rgba(0, 0, 0, 0.8);
+            content: "\25BC";
+            position: absolute;
+            text-align: center;
+            }
+            .d3-tip.n:after {
+            margin: -1px 0 0 0;
+            top: 100%;
+            left: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <script src="http://d3js.org/d3.v3.js"></script>
+        <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+        <script>
+            var margin = {top: 20, right: 20, bottom: 30, left: 50},
+                width = 960 - margin.left - margin.right,
+                height = 500 - margin.top - margin.bottom;
+            
+            var parseDate = d3.time.format("%d-%b-%y").parse;
+            
+            var color = d3.scale.category10();
+            
+            var x = d3.time.scale()
+                .range([0, width]);
+            
+            var y = d3.scale.linear()
+                .range([height, 0]);
+            
+            var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom");
+            
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left");
+                
+            var tip = d3.tip()
+            .attr('class', 'd3-tip')
+            .offset([-10, 0])
+            .html(function(d) {
+            		return "<strong>Runs:</strong> <span style='color:red'>" + d.runs + "</span><br><strong>Opponent:</strong> <span style='color:red'>" + d.opponent + "</span><br><strong>Date:</strong> <span style='color:red'>" + d.date + "</span>";
+            })    
+            
+            var line = d3.svg.line()
+                .x(function(d) { return x(d.date); })
+                .y(function(d) { return y(d.runs); });
+            
+            var svg = d3.select("body").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+              .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                
+            
+            svg.call(tip);
+            
+            d3.json("batting.json", function(error, data) {
+            	data=data[0]['allRecords']
+              data.forEach(function(d) {  
+            	  //d.date = Date.parse(dateString);
+                d.date = parseDate(d.date);
+                d.runs = +d.runs;
+              });
+            
+              x.domain(d3.extent(data, function(d) { return d.date; }));
+              y.domain(d3.extent(data, function(d) { return d.runs; }));
+              
+              svg.append("g")
+                  .attr("class", "x axis")
+                  .attr("transform", "translate(0," + height + ")")
+                  .call(xAxis);
+            
+              svg.append("g")
+                  .attr("class", "y axis")
+                  .call(yAxis)
+                .append("text")
+                  .attr("transform", "rotate(-90)")
+                  .attr("y", 6)
+                  .attr("dy", ".71em")
+                  .style("text-anchor", "end")
+                  .text("Runs");
+            
+              svg.append("path")
+                  .datum(data)
+                  .attr("class", "line")
+                  .attr("d", line);
+              
+              svg.selectAll("dot")
+              .data(data)
+              .enter().append("circle")
+              .attr("class", "dot")
+              .attr("r", 3.5)
+              .attr("fill",function(d){if(d.win=="True")return "green";else return "red";})
+              .attr("cx", function(d) { return x(d.date); })
+              .attr("cy", function(d) { return y(d.runs); })
+              .on('mouseover', tip.show)
+              .on('mouseout', tip.hide);
+            })
+            
+            svg.append("text")
+                    .attr("x", (width / 2))             
+                    .attr("y", 0 - (margin.top / 3))
+                    .attr("text-anchor", "middle")  
+                    .style("font-size", "16px") 
+                    .style("text-decoration", "underline")  
+                    .text("Player Stats")
+            ;
+            
+        </script>
+        <br>
+        <p>Links: 
+            <a href="matchstackbar.html"><span class="label label-info">Summary</span></a> 
+            <a href="battingchart.html"><span class="label label-info">Players Batting Avgs</span></a> 
+            <a href="ScatterChart.html"><span class="label label-info">Individual Batting Stats</span></a> 
+            <a href="batAvgBar.html"><span class="label label-info">Players Batting Comparison</span></a>
+            <a href="bowlingchart.html"><span class="label label-info">Bowlers Avg Comparison</span></a>
+            <a href="BowlerStats.html"><span class="label label-info">Bowler Stats</span></a>
+            <a href="groundmeter.html"><span class="label label-info">Ground Stats</span></a>
+        </p>
+    </body>
 </html>

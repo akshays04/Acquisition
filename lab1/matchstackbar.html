@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Summary</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script type="text/javascript">
@@ -21,17 +21,17 @@
                 
                 
                  var options = {
-        width: 1200,
-        height: 750,
-        
-        isStacked: true,
-
-        // Displays tooltip on selection.
-        // tooltip: { trigger: 'selection' }, 
-      };
+            width: 1200,
+            height: 750,
+            
+            isStacked: true,
+            
+            // Displays tooltip on selection.
+            // tooltip: { trigger: 'selection' }, 
+            };
                 
                  var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-        chart.draw(mydata, options);
+            chart.draw(mydata, options);
                     });
                     
                      
@@ -41,16 +41,15 @@
     </head>
     <body onload="read_json();">
         <div id="chart_div"></div>
+        <br>
+        <p>Links: 
+            <a href="matchstackbar.html"><span class="label label-info">Summary</span></a> 
+            <a href="battingchart.html"><span class="label label-info">Players Batting Avgs</span></a> 
+            <a href="ScatterChart.html"><span class="label label-info">Individual Batting Stats</span></a> 
+            <a href="batAvgBar.html"><span class="label label-info">Players Batting Comparison</span></a>
+            <a href="bowlingchart.html"><span class="label label-info">Bowlers Avg Comparison</span></a>
+            <a href="BowlerStats.html"><span class="label label-info">Bowler Stats</span></a>
+            <a href="groundmeter.html"><span class="label label-info">Ground Stats</span></a>
+        </p>
     </body>
-	
-	<br>
-	<p>Links: 
-    <a href="matchstackbar.html"><span class="label label-info">Summary</span></a> 
-	<a href="battingchart.html"><span class="label label-info">Players Batting Avgs</span></a> 
-	<a href="ScatterChart.html"><span class="label label-info">Individual Batting Stats</span></a> 
-	<a href="batAvgBar.html"><span class="label label-info">Players Batting Comparison</span></a>
-	<a href="bowlingchart.html"><span class="label label-info">Bowlers Avg Comparison</span></a>
-	<a href="BowlerStats.html"><span class="label label-info">Bowler Stats</span></a>
-	<a href="groundmeter.html"><span class="label label-info">Ground Stats</span></a>
-</p>
 </html>
