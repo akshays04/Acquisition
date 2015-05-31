@@ -375,9 +375,9 @@ with open('batting.json', 'w') as outfile:
     json.dump(newTopPlayerArr, outfile)
     
 
-if newTopPlayerArr[0]["win100"]>newTopPlayerArr[0]["win75"]:
+if newTopPlayerArr[0]["win100"]>=newTopPlayerArr[0]["win75"]:
     print "if "+newTopPlayerArr[0]["name"]+" scores more than 100 runs, "+ourTeam+" has "+str(newTopPlayerArr[0]["combinedWin"])+" % chance to win"
-elif newTopPlayerArr[0]["win75"]>newTopPlayerArr[0]["win50"]:
+elif newTopPlayerArr[0]["win75"]>=newTopPlayerArr[0]["win50"]:
     print "if "+newTopPlayerArr[0]["name"]+" scores more than 75 runs, "+ourTeam+" has "+str(newTopPlayerArr[0]["combinedWin"])+" % chance to win"
 elif newTopPlayerArr[0]["win50"]>0.0:
     print "if "+newTopPlayerArr[0]["name"]+" scores more than 50 runs, "+ourTeam+" has "+str(newTopPlayerArr[0]["combinedWin"])+" % chance to win"

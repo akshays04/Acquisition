@@ -349,5 +349,20 @@ print finalArr
 
 with open('bowling.json', 'w') as outfile:
     json.dump(finalArr, outfile)
+
+bowlingStr = ""
+bowlingPercent = 0.0   
+if finalArr[0]["win5wkt"]>=finalArr[0]["win3Eco"]:
+    bowlingStr = "if "+finalArr[0]["name"]+" takes 5 wickets in an innings, "+ourTeam+" has "+str(finalArr[0]["combinedWin"])+" % chance to win"
+    bowlingPercent = finalArr[0]["combinedWin"]
+    print bowlingStr
+elif finalArr[0]["win3Eco"]>=finalArr[0]["win3wkt"]:
+    bowlingStr = "if "+finalArr[0]["name"]+" takes 3 wickets at an economy of 4.5 runs per over, "+ourTeam+" has "+str(finalArr[0]["combinedWin"])+" % chance to win"
+    bowlingPercent = finalArr[0]["combinedWin"]
+    print bowlingStr
+elif finalArr[0]["win3wkt"]>0.0:
+    bowlingStr = "if "+finalArr[0]["name"]+" takes 3 wickets, "+ourTeam+" has "+str(finalArr[0]["combinedWin"])+" % chance to win"
+    bowlingPercent = finalArr[0]["combinedWin"]
+    print bowlingStr
     
     
