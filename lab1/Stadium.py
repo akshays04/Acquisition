@@ -91,10 +91,24 @@ tempDict["ourTeamB2Wins"] = ourTeamB2Wins
 tempDict["avgB1Win"] = b1Score / b1Count
 tempDict["avgB2Win"] = b2Score / b2Count
 
+tempDict2 = []
+temp = {}
+temp["highestScore"] = highestScore
+temp["lowestScore"] = lowestScore
+temp["avgB1Win"] = b1Score / b1Count
+tempDict2.append(temp)
+temp["highestScore"] = highestScore
+temp["lowestScore"] = lowestScore
+temp["avgB1Win"] = b2Score / b2Count
+tempDict2.append(temp)
+
 print tempDict
 
 with open('stadium.json', 'w') as outfile:
     json.dump(tempDict, outfile)
+    
+with open('speed.json', 'w') as outfile:
+    json.dump(tempDict2, outfile)
 
         
     
