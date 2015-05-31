@@ -13,8 +13,8 @@ bat = {}
 players1 = {}
 players2 = {}
 
-ourTeam = "India"
-versus = "Australia"
+ourTeam = "Australia"
+versus = "India"
 currentYear = 2015
 
 count = 0
@@ -403,12 +403,28 @@ with open('batting.json', 'w') as outfile:
     json.dump(newTopPlayerArr, outfile)
     
 
+batStr = ""
+batPercent = 0.0
 if newTopPlayerArr[0]["win100"]>=newTopPlayerArr[0]["win75"]:
-    print "if "+newTopPlayerArr[0]["name"]+" scores more than 100 runs, "+ourTeam+" has "+str(newTopPlayerArr[0]["combinedWin"])+" % chance to win"
+    batStr = "if "+newTopPlayerArr[0]["name"]+" scores more than 100 runs, "+ourTeam+" has "+str(newTopPlayerArr[0]["combinedWin"])+" % chance to win"
+    batPercent = (newTopPlayerArr[0]["combinedWin"] / 100.0) * 20.0
+    print batStr
 elif newTopPlayerArr[0]["win75"]>=newTopPlayerArr[0]["win50"]:
-    print "if "+newTopPlayerArr[0]["name"]+" scores more than 75 runs, "+ourTeam+" has "+str(newTopPlayerArr[0]["combinedWin"])+" % chance to win"
+    batStr = "if "+newTopPlayerArr[0]["name"]+" scores more than 75 runs, "+ourTeam+" has "+str(newTopPlayerArr[0]["combinedWin"])+" % chance to win"
+    batPercent = (newTopPlayerArr[0]["combinedWin"] / 100.0) * 20.0
+    print batStr
 elif newTopPlayerArr[0]["win50"]>0.0:
-    print "if "+newTopPlayerArr[0]["name"]+" scores more than 50 runs, "+ourTeam+" has "+str(newTopPlayerArr[0]["combinedWin"])+" % chance to win"
+    batStr = "if "+newTopPlayerArr[0]["name"]+" scores more than 50 runs, "+ourTeam+" has "+str(newTopPlayerArr[0]["combinedWin"])+" % chance to win"
+    batPercent = (newTopPlayerArr[0]["combinedWin"] / 100.0) * 20.0
+    print batStr
+    
+with open('data.json') as data_file:    
+    data = json.load(data_file)
+    data["batStr"] = batStr
+    data["batPercent"] = round(batPercent, 2)
+    
+with open('data.json', 'w') as outfile:
+    json.dump(data, outfile)
     
     
     

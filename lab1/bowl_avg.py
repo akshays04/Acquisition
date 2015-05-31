@@ -13,8 +13,8 @@ team2 = {}
 bowl = {}
 players1 = {}
 players2 = {}
-ourTeam = "India"
-versus = "Sri Lanka"
+ourTeam = "Australia"
+versus = "India"
 currentYear = 2015
 
 count = 0
@@ -354,15 +354,23 @@ bowlingStr = ""
 bowlingPercent = 0.0   
 if finalArr[0]["win5wkt"]>=finalArr[0]["win3Eco"]:
     bowlingStr = "if "+finalArr[0]["name"]+" takes 5 wickets in an innings, "+ourTeam+" has "+str(finalArr[0]["combinedWin"])+" % chance to win"
-    bowlingPercent = finalArr[0]["combinedWin"]
+    bowlingPercent = (finalArr[0]["combinedWin"] / 100.0) * 20.0
     print bowlingStr
 elif finalArr[0]["win3Eco"]>=finalArr[0]["win3wkt"]:
     bowlingStr = "if "+finalArr[0]["name"]+" takes 3 wickets at an economy of 4.5 runs per over, "+ourTeam+" has "+str(finalArr[0]["combinedWin"])+" % chance to win"
-    bowlingPercent = finalArr[0]["combinedWin"]
+    bowlingPercent = (finalArr[0]["combinedWin"] / 100.0) * 20.0
     print bowlingStr
 elif finalArr[0]["win3wkt"]>0.0:
     bowlingStr = "if "+finalArr[0]["name"]+" takes 3 wickets, "+ourTeam+" has "+str(finalArr[0]["combinedWin"])+" % chance to win"
-    bowlingPercent = finalArr[0]["combinedWin"]
+    bowlingPercent = (finalArr[0]["combinedWin"] / 100.0) * 20.0
     print bowlingStr
+    
+with open('data.json') as data_file:    
+    data = json.load(data_file)
+    data["bowlingStr"] = bowlingStr
+    data["bowlingPercent"] = round(bowlingPercent, 2)
+    
+with open('data.json', 'w') as outfile:
+    json.dump(data, outfile)
     
     
