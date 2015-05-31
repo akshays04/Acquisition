@@ -241,7 +241,7 @@ for each in db.odi.find({"$or":[{"team1":ourTeam,"team2":versus},{"team1":versus
 
 topPlayerArr = []
 
-for i in range(0,5):
+for i in range(0,10):
     testPlayer = ourTeamBatsman[i]
     topPlayer = {}
     topPlayer["name"] = testPlayer["batsman"]
