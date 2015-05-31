@@ -147,8 +147,13 @@ for i in range(0,len(ourTeamBatsman)):
             temp = ourTeamBatsman[j]
             ourTeamBatsman[j] = ourTeamBatsman[j+1]
             ourTeamBatsman[j+1] = temp
-           
+   
+newOurTeamBatsman = []
+for i in range(0,10):
+    newOurTeamBatsman.append(ourTeamBatsman[i])        
 print ourTeamBatsman
+with open('average.json', 'w') as outfile:
+    json.dump(newOurTeamBatsman, outfile)
 
 
 '''win % calc '''
