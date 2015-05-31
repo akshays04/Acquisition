@@ -15,7 +15,7 @@ players2 = {}
 
 ourTeam = "India"
 versus = "Sri Lanka"
-currentYear = 2014
+currentYear = 2015
 
 count = 0
 for each in db.odi.find({"$or":[{"team1":ourTeam,"team2":versus},{"team1":versus,"team2":ourTeam}]}):
@@ -228,33 +228,37 @@ for each in db.odi.find({"$or":[{"team1":ourTeam,"team2":versus},{"team1":versus
 
 topPlayerArr = []
 
-for i in range(0,3):
+for i in range(0,5):
     testPlayer = ourTeamBatsman[i]
     topPlayer = {}
     topPlayer["name"] = testPlayer["batsman"]
     topPlayer["avg"] = testPlayer["avg"]
+    count50win = 0
     count75win = 0
     count100win = 0
-    count120win = 0
+    count50lose = 0
     count75lose = 0
     count100lose = 0
-    count120lose = 0
     for each in latestPlayersWin :
         if each.get("name")==topPlayer["name"]: 
-            if(int(each["runs"])>75):
-                count75win=count75win + 1
+            if(int(each["runs"])>50 and int(each["runs"])<75):
+                count50win=count50win + 1
+            if(int(each["runs"])>75 and int(each["runs"])<100):
+                count75win= count75win + 1
             if(int(each["runs"])>100):
-                count100win= count100win + 1
-            if(int(each["runs"])>120):
-                count120win = count120win + 1
+                count100win = count100win + 1
     for each in latestPlayersLose :
         if each.get("name")==topPlayer["name"]: 
-            if(int(each["runs"])>75):
-                count75lose=count75lose + 1
+            if(int(each["runs"])>50 and int(each["runs"])<75):
+                count50lose=count50lose + 1
+            if(int(each["runs"])>75 and int(each["runs"])<100):
+                count75lose= count75lose + 1
             if(int(each["runs"])>100):
-                count100lose= count100lose + 1
-            if(int(each["runs"])>120):
-                count120lose = count120lose + 1
+                count100lose = count100lose + 1
+    if count50win+count50win !=0 : 
+        win50 = float(count50win)/(float(count50win)+float(count50lose))
+    else:
+        win50 = 0.0
     if count75win+count75win !=0 : 
         win75 = float(count75win)/(float(count75win)+float(count75lose))
     else:
@@ -263,24 +267,20 @@ for i in range(0,3):
         win100 = float(count100win)/(float(count100win)+float(count100lose))
     else:
         win100 = 0.0
-    if count120win+count120win !=0 : 
-        win120 = float(count120win)/(float(count120win)+float(count120lose))
-    else:
-        win120 = 0.0
-    win75 = win75 * 100.0
+    win50 = win50 * 100.0
+    win75 = win75 * 100
     win100 = win100 * 100
-    win120 = win120 * 100
-    combinedWin = win75+win100+win120
+    combinedWin = win50+win75+win100
     topPlayer["combinedWin"] = round((combinedWin/300.0)*100.0, 2)
+    topPlayer["count50win"] = count50win
     topPlayer["count75win"] = count75win
     topPlayer["count100win"] = count100win
-    topPlayer["count120win"] = count120win
+    topPlayer["count50lose"] = count50lose
     topPlayer["count75lose"] = count75lose
     topPlayer["count100lose"] = count100lose
-    topPlayer["count120lose"] = count120lose
+    topPlayer["win50"] = round(win50,2)
     topPlayer["win75"] = round(win75,2)
     topPlayer["win100"] = round(win100,2)
-    topPlayer["win120"] = round(win120,2)
     scores=[]
     for each in latestRecords:
         if(each.get('bat1')[0].get('team') == ourTeam):
@@ -316,18 +316,25 @@ for i in range(0,3):
                     scores.append(temp)
     topPlayer["latestRecords"] = scores
     topPlayerArr.append(topPlayer)
-
-for i in range(0,len(topPlayerArr)):
-    for j in range(0,len(topPlayerArr)-1):
-        if topPlayerArr[j]["combinedWin"] < topPlayerArr[j+1]["combinedWin"]:
-            temp = topPlayerArr[j]
-            topPlayerArr[j] = topPlayerArr[j+1]
-            topPlayerArr[j+1] = temp
     
-print topPlayerArr
+newTopPlayerArr = []
+for each in topPlayerArr:
+    if len(each["latestRecords"]) != 0:
+        newTopPlayerArr.append(each)
+        
+print len(newTopPlayerArr)
+
+for i in range(0,len(newTopPlayerArr)):
+    for j in range(0,len(newTopPlayerArr)-1):
+        if newTopPlayerArr[j]["combinedWin"] < newTopPlayerArr[j+1]["combinedWin"]:
+            temp = newTopPlayerArr[j]
+            newTopPlayerArr[j] = newTopPlayerArr[j+1]
+            newTopPlayerArr[j+1] = temp
+    
+print newTopPlayerArr
 
 with open('batting.json', 'w') as outfile:
-    json.dump(topPlayerArr, outfile)
+    json.dump(newTopPlayerArr, outfile)
     
             
     
